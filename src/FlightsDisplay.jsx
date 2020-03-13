@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import searchFlights from "./searchFlights.js";
 import { DateTime } from "luxon";
-
+import Nav from "./Nav.jsx";
 class FlightsDisplay extends Component {
   
 

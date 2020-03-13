@@ -1,37 +1,26 @@
-import React, { useState } from 'react';
-import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
-import searchFlights from "./searchFlights.js";
+import React, { useState, useEffect } from "react";
+
 import "./App.css";
+import DropDownMenu from './DropDown.jsx'
 
-const Nav = (props) => {
- 
-
+const Nav = props => {
   return (
-    <div style={{ display: 'flex', flexWrap: 'nowrap'}}>
-      <DropDownMenu items={[1,2]} header={'Choose Destination'}/>
-      <DropDownMenu items={[1,2]} header={'Choose Arrival'}/>
+    <div style={{ display: "flex", flexWrap: "nowrap" }}>
+      <DropDownMenu
+        type="Depature"
+        items={["Valencia", "Barcelona"]}
+        header={"Choose Destination"}
+        handleClickEvent={props.handleClickDestination}
+      />
+      <DropDownMenu
+        type="Arrival"
+        items={["Berlin", "Prague"]}
+        header={"Choose Arrival"}
+        handleClickEvent={props.handleClickArrival}
+      />
     </div>
-
   );
-}
+};
+
 
 export default Nav;
-
-function DropDownMenu(props) {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const toggle = () => setDropdownOpen(!dropdownOpen);
-  
-  const items = props.items.map(item => {
-    return <DropdownItem>{item}</DropdownItem>
-  })
-  return (
-    <Dropdown isOpen={dropdownOpen} toggle={toggle}>
-    <DropdownToggle caret>
-    {props.header}
-      </DropdownToggle>
-    <DropdownMenu>
-     {items}
-    </DropdownMenu>
-  </Dropdown>
-  )
-}

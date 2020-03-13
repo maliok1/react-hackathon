@@ -21,6 +21,8 @@ const searchFlights = async(origin, destination, direct) => {
     }
     return result 
   })
+  console.log(data);
+  
   return results;
 }
 export default searchFlights;
