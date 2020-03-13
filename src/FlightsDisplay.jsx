@@ -4,22 +4,11 @@ import searchFlights from "./searchFlights.js";
 import { DateTime } from "luxon";
 
 class FlightsDisplay extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      flightInfo: []
-    };
-  }
-  componentDidMount = async () => {
-    const data = await searchFlights();
-    console.log("data", data);
-    this.setState({
-      flightInfo: data
-    });
-  };
+  
 
   render() {
-    const getFlightInfo = this.state.flightInfo.map((item, index)=> {
+    const {flightInfo} = this.props
+    const getFlightInfo = this.props.flightInfo.map((item, index)=> {
       return (
         <div key={`item-${index}`}>
           <h3>From</h3>
@@ -30,9 +19,9 @@ class FlightsDisplay extends Component {
           <p>{item.destination}</p>
           <h3>Arrival</h3>
           <p>{item.aTime}</p>
+          <hr/>
         </div>
       );
-    
     })
 
     return (
