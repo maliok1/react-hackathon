@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import searchFlights from './searchFlights.js';
+import { DateTime } from 'luxon';
+
 
 
 
@@ -8,29 +10,30 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      searchResults: [],
+      flightInfo: [],
     }
   }
   componentDidMount= async()=>
   {
     console.log("I've mounted");
 
-    const url = await searchFlights();
-    const response =  await fetch(url);
-    console.log('response', response);
-  
-    const data = await response.json()
-    console.log('data', data);   
+    const data = await searchFlights();
+ console.log('data', data);
+ 
     this.setState({
-      searchResults: data.search_params
+      flightInfo: data
     })
     
   }
+  // DateTime.fromMillis(data.data[0].aTime * 1000).toFormat('hh:mm')
 
   render() {
     return (
       <div className="App">
-        {this.state.searchResults}
+        {this.state.origin}
+        {this.state.destination}
+        {this.state.dTime}
+        {this.state.aTime}
       </div>
     );
   }
