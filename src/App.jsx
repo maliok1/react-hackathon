@@ -10,47 +10,55 @@ import airports from './vars.json'
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
+    this.state = { 
+      loading:true,
       flightInfo: [],
-      to: 'PRG',
+      to: '',
       from: ''
     };
   }
 
-  componentDidMount = async () => {
-    const data = await searchFlights();
-    console.log("data", data);
-    this.setState({
-      flightInfo: data
-    });
-    
+  componentDidMount = () => {
+    this.getFlights()
   }
   componentDidUpdate= async() => {
     console.log(this.state.to);
     console.log(this.state.from)
   }
 
+  getFlights=async()=>{
+    const data = await searchFlights(this.state.to,this.state.from);
+    console.log("data", data);
+    this.setState({
+      flightInfo: data,
+      loading:false
+    });
+  }
+
   handleClickDestination =(item)=> {
     this.setState({
       to:airports[item]
     })
-    // console.log(this.state.to);
-    
   }
   handleClickArrival =(item)=> {
     this.setState({
       from:airports[item]
     })
-
-    // console.log(this.state.from);
   }
 
+  handleClickSubmit=()=> {
+    this.setState({
+      loading: true
+    },this.getFlights)
+    
+    console.log('boom')
+  }
   render() {
     return (
       <div className="App">
-        <Nav to={this.state.to} from={this.state.from} handleClickDestination={this.handleClickDestination} handleClickArrival={this.handleClickArrival} />
-        <FlightDisplay flightInfo={this.state.flightInfo}
-        />
+        <Nav to={this.state.to} from={this.state.from} handleClickDestination={this.handleClickDestination} handleClickArrival={this.handleClickArrival}  handleClickSubmit={this.handleClickSubmit}/>
+       {this.state.loading ? 'loading' : <FlightDisplay flightInfo={this.state.flightInfo}
+        />}
       </div>
     );
   }

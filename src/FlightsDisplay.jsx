@@ -8,6 +8,7 @@ class FlightsDisplay extends Component {
 
   render() {
     const {flightInfo} = this.props
+    
     const getFlightInfo = this.props.flightInfo.map((item, index)=> {
       return (
         <div key={`item-${index}`}>

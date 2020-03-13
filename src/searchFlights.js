@@ -1,12 +1,12 @@
 import { DateTime } from 'luxon';
 
-const searchFlights = async(origin, destination, direct) => {
+const searchFlights = async(origin, destination) => {
   
   const when = DateTime.local().plus({days: 1}).toFormat('dd/MM/yyyy');
   const query = new URLSearchParams({
     partner: 'picky', 
-    flyFrom:'PRG',
-    to:'DME'
+    flyFrom:origin,
+    to:destination
   })
   const url = new URL(`?${query}`,' https://api.skypicker.com/flights' );
   

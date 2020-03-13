@@ -14,10 +14,11 @@ const Nav = props => {
       />
       <DropDownMenu
         type="Arrival"
-        items={["Berlin", "Prague"]}
+        items={["Moscow", "Prague"]}
         header={"Choose Arrival"}
         handleClickEvent={props.handleClickArrival}
       />
+      <button type="submit" onClick={()=>{props.handleClickSubmit()}}>Submit</button>
     </div>
   );
 };
