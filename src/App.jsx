@@ -6,6 +6,9 @@ import { DateTime } from 'luxon';
 import FlightDisplay from './FlightsDisplay.jsx';
 import Nav from './Nav.jsx'
 import airports from './vars.json'
+import Spinner from './Spinner.jsx'
+import Pagination from './Pagination.jsx'
+
 
 class App extends Component {
   constructor(props) {
@@ -14,33 +17,34 @@ class App extends Component {
       loading:true,
       flightInfo: [],
       to: '',
-      from: ''
+      from: '',
+      currentPage: 1,
+      flightsPerPage: 5, 
     };
+    this.handleClickPagination = this.handleClickPagination.bind(this)
+    this.handlePreviousPage = this.handlePreviousPage.bind(this)
+    this.handleNextPage = this.handleNextPage.bind(this)
   }
 
   componentDidMount = () => {
     this.getFlights()
   }
-  componentDidUpdate= async() => {
-    console.log(this.state.to);
-    console.log(this.state.from)
-  }
-
-  getFlights=async()=>{
+  
+  getFlights= async() =>{
     const data = await searchFlights(this.state.to,this.state.from);
-    console.log("data", data);
+    // console.log("data", data);
     this.setState({
       flightInfo: data,
       loading:false
     });
   }
 
-  handleClickDestination =(item)=> {
+  handleClickDestination= (item) => {
     this.setState({
       to:airports[item]
     })
   }
-  handleClickArrival =(item)=> {
+  handleClickArrival= (item) => {
     this.setState({
       from:airports[item]
     })
@@ -50,16 +54,47 @@ class App extends Component {
     this.setState({
       loading: true
     },this.getFlights)
-    
-    console.log('boom')
   }
-  render() {
+ 
+  handleClickPagination(event){
+    this.setState({
+      currentPage: Number(event.target.id),
+    });
+  }
+
+  handlePreviousPage(){
+    if(this.state.currentPage > 1){
+      this.setState({
+      currentPage: this.state.currentPage - 1
+      })
+    }
+  }
+  handleNextPage(){
+    if(this.state.currentPage < this.state.flightInfo.length / this.state.flightsPerPage){
+      this.setState({
+        currentPage: this.state.currentPage + 1
+      })
+    }
+  }
+  render() {  
     return (
       <div className="App">
-        <Nav to={this.state.to} from={this.state.from} handleClickDestination={this.handleClickDestination} handleClickArrival={this.handleClickArrival}  handleClickSubmit={this.handleClickSubmit}/>
-       {this.state.loading ? 'loading' : <FlightDisplay flightInfo={this.state.flightInfo}
-        />}
-      </div>
+        { this.state.loading 
+        
+        ? <Spinner /> 
+        :
+        <>
+        <Nav to={this.state.to} from={this.state.from} handleClickDestination={this.handleClickDestination} handleClickArrival={this.handleClickArrival}  handleClickSubmit={this.handleClickSubmit} />
+
+        <Pagination flightInfo={this.state.flightInfo} currentPage={this.state.currentPage} flightsPerPage={this.state.flightsPerPage} handleClickPagination={this.handleClickPagination} handlePreviousPage={this.handlePreviousPage} handleNextPage={this.handleNextPage} />
+  
+        <FlightDisplay flightInfo={this.state.flightInfo} currentPage={this.state.currentPage} flightsPerPage={this.state.flightsPerPage}
+        /> 
+  
+        <Pagination flightInfo={this.state.flightInfo} currentPage={this.state.currentPage} flightsPerPage={this.state.flightsPerPage} handleClickPagination={this.handleClickPagination} handlePreviousPage={this.handlePreviousPage} handleNextPage={this.handleNextPage} />
+        </>
+        }
+       </div>        
     );
   }
 }

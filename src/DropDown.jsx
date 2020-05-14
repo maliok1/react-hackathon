@@ -6,13 +6,20 @@ import {
   DropdownItem
 } from "reactstrap";
 
+
+const DropDownStyle = {
+  height:"100%",
+  borderRadius:0,
+  marginRight:'5px'
+}
+
 function DropDownMenu(props) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const toggle = () => setDropdownOpen(!dropdownOpen);
   const {handleClickEvent} = props
   const items = props.items.map((item, index) => {
     return (
-      <DropdownItem
+      <DropdownItem 
         key={index}
         onClick={() => handleClickEvent(item)}
       >
@@ -23,7 +30,7 @@ function DropDownMenu(props) {
 
   return (
     <Dropdown isOpen={dropdownOpen} toggle={toggle}>
-      <DropdownToggle caret>{props.header}</DropdownToggle>
+      <DropdownToggle caret style={DropDownStyle}>{props.header}</DropdownToggle>
       <DropdownMenu>{items}</DropdownMenu>
     </Dropdown>
   );

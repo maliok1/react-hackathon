@@ -3,5 +3,10 @@
   "Valencia" : "VLC",
   "Prague": "PRG",
   "Barcelona": "BCN",
-  "Moscow": "DME"
+  "Moscow": "DME",
+  "Paris": "CDG",
+  "Brussels": "BRU",
+  "London": "LHR",
+  "Vienna": "VIE"
 }
+

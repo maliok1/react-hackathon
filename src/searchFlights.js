@@ -17,8 +17,12 @@ const searchFlights = async(origin, destination) => {
       origin: info.cityFrom,
       destination:info.cityTo, 
       dTime:DateTime.fromMillis(info.dTime * 1000).toFormat('hh:mm'), 
-      aTime:DateTime.fromMillis(info.aTime * 1000).toFormat('hh:mm'), 
+      aTime:DateTime.fromMillis(info.aTime * 1000).toFormat('hh:mm'),
+      price:info.price,
+      flight_duration:info.fly_duration,
+      transfers: info.route
     }
+  
     return result 
   })
   console.log(data);

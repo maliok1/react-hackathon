@@ -1,0 +1,18 @@
+.pagination{
+  display: flex;
+  flex-wrap: wrap;
+}
+ul .page-link {
+  background-color:rgb(40, 44, 52);
+  color: white;
+}
+
+ul .page-link.active{
+  background-color: white;
+  color: rgb(40, 44, 52);
+}
+
+li.page-item.page-link:hover{
+  background-color: white;
+  color: rgb(40, 44, 52);
+}
